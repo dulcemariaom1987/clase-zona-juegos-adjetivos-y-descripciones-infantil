@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Zona de juegos: Adjetivos y Descripciones</title>
+<style>
+:root{--bg:#fff6ea;--card:#fff;--ink:#2b2340;--mut:#6b6385;--pri:#7c4dff;--pk:#ff5c93;--ok:#1fa971;--bad:#e5484d;--line:#e4dcf6;--hl:#ffd966;--okbg:#d9f7e8;--badbg:#ffe0e1;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#16122a;--card:#241d42;--ink:#f3efff;--mut:#b8afd9;--ok:#43d19a;--bad:#ff6b70;--line:#3b3263;--hl:#a8841a;--okbg:#12402f;--badbg:#4a1d24}}
+:root[data-theme="dark"]{--bg:#16122a;--card:#241d42;--ink:#f3efff;--mut:#b8afd9;--ok:#43d19a;--bad:#ff6b70;--line:#3b3263;--hl:#a8841a;--okbg:#12402f;--badbg:#4a1d24}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Trebuchet MS","Segoe UI",system-ui,sans-serif;font-size:17px;line-height:1.4}
+header{background:linear-gradient(135deg,#7c4dff,#ff5c93);color:#fff;text-align:center;padding:18px 12px 14px;border-radius:0 0 28px 28px}
+h1{margin:0;font-size:clamp(1.4rem,6vw,2rem)}
+header p{margin:4px 0 8px}
+.stars{display:inline-block;background:rgba(255,255,255,.25);border-radius:20px;padding:4px 14px;font-weight:700}
+main{max-width:640px;margin:0 auto;padding:16px 14px 40px}
+h2{margin:8px 0 2px;font-size:1.3rem}
+.tip{color:var(--mut);margin:0 0 10px;font-size:.95rem}
+button{font:inherit;cursor:pointer;color:inherit}
+.menu{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.tile{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:14px 10px;text-align:center;box-shadow:0 4px 0 var(--line);transition:transform .15s}
+.tile:hover{transform:translateY(-3px)}
+.tile i{display:block;font-style:normal;font-size:2.4rem}
+.tile b{display:block}
+.tile small{color:var(--mut)}
+.back{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:6px 14px;margin-bottom:6px}
+.stat{display:flex;justify-content:space-between;font-weight:700;margin:6px 0}
+.bar{height:10px;background:var(--line);border-radius:6px;overflow:hidden;margin-bottom:10px}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,#7c4dff,#ff5c93);transition:width .4s}
+.card{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:16px;text-align:center;margin:8px 0}
+.big{font-size:4rem;line-height:1.1}
+.big.w{font-size:2.4rem;font-weight:800;color:var(--pri)}
+.sent{font-size:1.3rem;font-weight:700;margin:6px 0}
+.blank{display:inline-block;min-width:3.5em;border-bottom:3px dashed var(--pk)}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.opt{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:14px 8px;font-size:1.1rem;font-weight:700;box-shadow:0 3px 0 var(--line)}
+.opt:hover{border-color:var(--pri)}
+.opt.ok{background:var(--okbg);border-color:var(--ok)}
+.opt.bad{background:var(--badbg);border-color:var(--bad)}
+.fb{min-height:1.6em;text-align:center;font-weight:700;margin:8px 0}
+.btn{background:var(--pri);color:#fff;border:0;border-radius:16px;padding:12px 22px;font-weight:700;font-size:1.05rem;box-shadow:0 4px 0 rgba(0,0,0,.25)}
+.win{background:var(--okbg);border-color:var(--ok)}
+.win .big{font-size:3rem}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.mem{aspect-ratio:1;background:var(--pri);color:#fff;border:2px solid transparent;border-radius:14px;font-size:1.6rem;display:flex;align-items:center;justify-content:center;padding:2px;overflow:hidden;word-break:break-word}
+.mem.on{background:var(--card);color:var(--ink);border-color:var(--pri);font-size:clamp(.7rem,3.3vw,1.05rem);font-weight:700}
+.mem.on.e{font-size:1.9rem}
+.mem.ok{background:var(--okbg);border-color:var(--ok)}
+.ws{display:grid;grid-template-columns:repeat(10,1fr);gap:3px;max-width:420px;margin:8px auto}
+.ws button{aspect-ratio:1;background:var(--card);border:1px solid var(--line);border-radius:6px;font-weight:800;font-size:clamp(.8rem,3.6vw,1.1rem);padding:0}
+.ws button.s{background:var(--hl)}
+.ws button.f{background:var(--okbg);border-color:var(--ok)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
+.chip{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:3px 10px;font-size:.9rem}
+.chip.f{background:var(--okbg);border-color:var(--ok);text-decoration:line-through}
+.pw{height:200px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end}
+.pop{width:74px;background:linear-gradient(#ff5c93,#ffa35c);border-radius:37px 37px 10px 10px;transition:height .5s;box-shadow:inset -8px 0 0 rgba(255,255,255,.25)}
+.stick{width:16px;height:40px;background:#e2b878;border-radius:0 0 8px 8px}
+.pud{height:12px;background:#ff8fb3;border-radius:50%;transition:width .5s}
+.word{font-size:1.8rem;letter-spacing:.3em;font-weight:800;text-align:center;margin:8px 0;min-height:2.4rem}
+.kb{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
+.kb button{width:42px;height:44px;background:var(--card);border:2px solid var(--line);border-radius:10px;font-weight:800;padding:0}
+.kb button:disabled{opacity:.6;cursor:default}
+.kb .ok{background:var(--okbg);border-color:var(--ok)}
+.kb .bad{background:var(--badbg);border-color:var(--bad)}
+button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+button:active{transform:scale(.95)}
+@keyframes pop{0%{transform:scale(.6);opacity:0}70%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
+@keyframes bounce{0%,100%{transform:translateY(0)}40%{transform:translateY(-12px)}70%{transform:translateY(-4px)}}
+@keyframes flip{from{transform:rotateY(90deg)}to{transform:rotateY(0)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes slide{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes fall{to{transform:translateY(105vh) rotate(540deg)}}
+@keyframes drip{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.05)}}
+@keyframes wob{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(8deg)}}
+h1{animation:float 3s ease-in-out infinite}
+.mute{background:rgba(255,255,255,.25);border:0;border-radius:20px;padding:4px 12px;margin-left:8px;font-weight:700;color:#fff}
+.stars.bump{animation:pop .35s}
+#game>*,#home>*{animation:slide .4s both}
+#game .card .big{animation:pop .5s both}
+#game .win .big{animation:bounce 1s infinite}
+.tile{animation:pop .45s both}
+.tile i{animation:float 2.5s ease-in-out infinite}
+.tile:nth-child(odd) i{animation-delay:.4s}
+.tile:hover i{animation:wob .5s infinite}
+.opt.ok{animation:bounce .5s}
+.opt.bad{animation:shake .45s}
+.mem.on{animation:flip .35s}
+.mem.ok{animation:bounce .5s}
+.ws button.s{transform:scale(1.15)}
+.ws button.f{animation:pop .4s}
+.chip.f{animation:bounce .5s}
+.kb .ok{animation:pop .3s}
+.kb .bad{animation:shake .4s}
+.pop{transform-origin:bottom;animation:drip 2s ease-in-out infinite}
+.pop.hit{animation:shake .45s}
+.cf{position:fixed;top:-30px;pointer-events:none;z-index:99;animation:fall 3s linear forwards}
+@media(min-width:700px){body{font-size:18px}main{max-width:820px}.menu{grid-template-columns:repeat(4,1fr)}.big{font-size:5rem}.opts{gap:14px}.opt{padding:18px 10px;font-size:1.25rem}.grid4{gap:12px;max-width:560px;margin:0 auto}.ws{max-width:520px}.kb button{width:50px;height:52px}}
+@media(min-width:1100px){main{max-width:960px}}
+@media(max-width:380px){body{font-size:15px}.big{font-size:3.2rem}.opt{padding:12px 4px;font-size:1rem}.kb{gap:4px}.kb button{width:36px;height:40px}.grid4{gap:6px}.menu{gap:8px}.tile{padding:10px 6px}.word{font-size:1.5rem}}
+@media(max-height:480px) and (orientation:landscape){.big{font-size:2.6rem}header{padding:8px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header>
+  <h1>🎮 Adjectives Game Zone</h1>
+  <p>Zona de juegos de adjetivos y descripciones</p>
+  <div class="stars">⭐ Estrellas: <b id="st">0</b></div><button class="mute" id="mute" aria-label="Activar o silenciar sonido">🔊</button>
+</header>
+<main>
+  <button class="back" id="back" hidden>← Menú de juegos</button>
+  <div id="home"></div>
+  <div id="game" hidden></div>
+</main>
+<script>
+const $ = s => document.querySelector(s);
+const sh = a => { a = [...a]; for (let i = a.length - 1; i > 0; i--) { const j = Math.random() * (i + 1) | 0; [a[i], a[j]] = [a[j], a[i]]; } return a; };
+let stars = 0, T = 0;
+function anim(el, c) { if (!el) return; el.classList.remove(c); void el.offsetWidth; el.classList.add(c); }
+const addStar = n => { stars += n; $('#st').textContent = stars; anim($('.stars'), 'bump'); };
+
+/* ---------- Sonidos (sintetizados, sin archivos) ---------- */
+let AC = null, muted = false;
+function tone(f, d, type, v, when) {
+  if (muted) return;
+  try {
+    AC = AC || new (window.AudioContext || window.webkitAudioContext)();
+    if (AC.state === 'suspended') AC.resume();
+    const o = AC.createOscillator(), g = AC.createGain(), s = AC.currentTime + (when || 0);
+    o.type = type || 'sine'; o.frequency.setValueAtTime(f, s);
+    g.gain.setValueAtTime(v || .15, s); g.gain.exponentialRampToValueAtTime(.001, s + d);
+    o.connect(g); g.connect(AC.destination); o.start(s); o.stop(s + d);
+  } catch (e) {}
+}
+const sfx = {
+  click: () => tone(520, .08, 'triangle', .12),
+  flip: () => tone(700, .06, 'square', .05),
+  ok: () => [523, 659, 784].forEach((f, i) => tone(f, .18, 'sine', .18, i * .09)),
+  bad: () => { tone(200, .25, 'sawtooth', .08); tone(150, .3, 'sawtooth', .08, .12); },
+  match: () => [660, 880].forEach((f, i) => tone(f, .15, 'triangle', .18, i * .1)),
+  win: () => [523, 659, 784, 1047, 784, 1047].forEach((f, i) => tone(f, .22, 'triangle', .18, i * .11)),
+  lose: () => [392, 330, 262].forEach((f, i) => tone(f, .3, 'sawtooth', .08, i * .18))
+};
+function speak(t) {
+  if (muted || !window.speechSynthesis) return;
+  try { speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(t); u.lang = 'en-US'; u.rate = .85; speechSynthesis.speak(u); } catch (e) {}
+}
+
+/* ---------- Confeti ---------- */
+function confetti() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const E = ['🎉', '⭐', '🎈', '✨', '🍭', '🌈'];
+  for (let i = 0; i < 28; i++) {
+    const s = document.createElement('span');
+    s.className = 'cf'; s.textContent = E[i % E.length];
+    s.style.cssText = 'left:' + (Math.random() * 96) + '%;font-size:' + (18 + Math.random() * 18) + 'px;animation-duration:' + (2 + Math.random() * 2.5) + 's;animation-delay:' + (Math.random() * .6) + 's';
+    document.body.appendChild(s);
+    setTimeout(() => s.remove(), 5500);
+  }
+}
+
+// [english, español, emoji]
+const W = [
+  ['big','grande','🐘'],['small','pequeño','🐜'],['tall','alto','🦒'],['short','bajo','🐭'],
+  ['red','rojo','🍎'],['blue','azul','🌊'],['green','verde','🐸'],['yellow','amarillo','🍌'],
+  ['happy','feliz','😊'],['sad','triste','😢'],['angry','enojado','😡'],['scared','asustado','😱'],
+  ['hot','caliente','🔥'],['cold','frío','🥶'],['warm','cálido','☀️'],['cool','fresco','🧊'],
+  ['beautiful','bonito','🌺'],['ugly','feo','👹'],['clean','limpio','🧼'],['dirty','sucio','🐷'],
+  ['funny','divertido','🤡'],['smart','inteligente','🧠'],['kind','amable','🤗'],['brave','valiente','🦁']
+];
+const TR = Object.fromEntries(W.map(w => [w[0], w[1]]));
+
+function done(html, again, lose) {
+  const e = $('#end');
+  e.innerHTML = '<div class="card win">' + html + '<p><button class="btn" id="ag">Jugar otra vez 🔄</button></p></div>';
+  $('#ag').onclick = again;
+  if (lose) sfx.lose(); else { confetti(); sfx.win(); }
+  e.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+/* ---------- Motor de preguntas de opción múltiple ---------- */
+function choice(title, tip, gen) {
+  const my = T, q = gen(), box = $('#game');
+  let i = 0, sc = 0, lock = false;
+  function show() {
+    if (i >= q.length) return end();
+    const it = q[i];
+    box.innerHTML = '<h2>' + title + '</h2><p class="tip">' + tip + '</p>' +
+      '<div class="stat"><span>Pregunta ' + (i + 1) + '/' + q.length + '</span><span>✅ ' + sc + '</span></div>' +
+      '<div class="bar"><i style="width:' + (i / q.length * 100) + '%"></i></div>' +
+      '<div class="card">' + it.top + '</div><div class="opts" id="op"></div><p class="fb" id="fb"></p>';
+    const o = $('#op');
+    it.opts.forEach(t => {
+      const b = document.createElement('button');
+      b.className = 'opt'; b.textContent = t;
+      b.onclick = () => pick(b, t, it);
+      o.appendChild(b);
+    });
+    lock = false;
+  }
+  function pick(b, t, it) {
+    if (lock) return; lock = true;
+    const ok = t === it.a;
+    if (ok) { sc++; addStar(1); sfx.ok(); } else sfx.bad();
+    setTimeout(() => speak(it.a.replace(/[^A-Za-z ]/g, '').trim()), 500);
+    b.classList.add(ok ? 'ok' : 'bad');
+    if (!ok) document.querySelectorAll('.opt').forEach(x => { if (x.textContent === it.a) x.classList.add('ok'); });
+    $('#fb').textContent = ok ? '🎉 ¡Correcto!' : '💪 ¡Casi! La respuesta era: ' + it.a;
+    setTimeout(() => { if (my === T) { i++; show(); } }, 1300);
+  }
+  function end() {
+    const p = sc / q.length;
+    const m = p >= .8 ? ['🏆', '¡Eres un campeón!'] : p >= .5 ? ['🌟', '¡Muy bien!'] : ['💪', '¡Sigue practicando!'];
+    box.innerHTML = '<h2>' + title + '</h2><div class="card win"><div class="big">' + m[0] + '</div><h2>' + m[1] + '</h2><p>Lograste <b>' + sc + ' de ' + q.length + '</b> respuestas correctas.</p><button class="btn" id="ag">Jugar otra vez 🔄</button></div>';
+    $('#ag').onclick = () => choice(title, tip, gen);
+    if (p >= .5) { confetti(); sfx.win(); } else sfx.lose();
+  }
+  show();
+}
+
+/* ---------- Generadores ---------- */
+const gQuiz = () => sh(W).slice(0, 10).map(w => ({
+  top: '<div class="big">' + w[2] + '</div><p>¿Cómo se dice <b>' + w[1] + '</b> en inglés?</p>',
+  opts: sh([w[0], ...sh(W.filter(x => x !== w)).slice(0, 3).map(x => x[0])]),
+  a: w[0]
+}));
+
+const PAIRS = [['big','small'],['tall','short'],['hot','cold'],['happy','sad'],['clean','dirty'],['beautiful','ugly'],['brave','scared'],['warm','cool']];
+const gOpp = () => sh(PAIRS).map(p => {
+  const [x, y] = Math.random() < .5 ? p : [p[1], p[0]];
+  return {
+    top: '<p>¿Cuál es el <b>opuesto</b> de…?</p><div class="big w">' + x.toUpperCase() + '</div>',
+    opts: sh([y, ...sh(W.map(w => w[0]).filter(w => !p.includes(w))).slice(0, 3)]),
+    a: y
+  };
+});
+
+const S = [
+  ['The elephant is ___.','🐘','big',['small','sad','dirty']],
+  ['The ice cream is ___.','🍦','cold',['hot','angry','tall']],
+  ['The girl is ___ because she won a prize.','🏆','happy',['sad','dirty','cold']],
+  ['The giraffe is very ___.','🦒','tall',['short','small','sad']],
+  ['The boy is ___ of the dark.','🌙','scared',['funny','warm','clean']],
+  ['The sun is ___.','☀️','hot',['cold','sad','short']],
+  ['The room is ___ after cleaning.','🧹','clean',['dirty','angry','ugly']],
+  ['The clown is very ___.','🤡','funny',['sad','cold','dirty']],
+  ['The firefighter is ___.','🧑‍🚒','brave',['scared','sad','dirty']],
+  ['The flower is ___.','🌺','beautiful',['ugly','angry','cold']],
+  ['My little brother is ___ because he lost his toy.','🧸','sad',['happy','funny','hot']],
+  ['She is ___. She got 100 on the test.','📝','smart',['dirty','cold','short']]
+];
+const gSent = () => sh(S).slice(0, 8).map(s => ({
+  top: '<div class="big">' + s[1] + '</div><p class="sent">' + s[0].replace('___', '<span class="blank"></span>') + '</p>',
+  opts: sh([s[2], ...s[3]]),
+  a: s[2]
+}));
+
+const O = [['a big dog','🐶'],['a small house','🏠'],['a black cat','🐱'],['a happy girl','👧'],['a red apple','🍎'],['a tall tree','🌳'],['a funny clown','🤡'],['a beautiful flower','🌺'],['a cold drink','🥤'],['a sad boy','😢']];
+const gOrder = () => sh(O).slice(0, 8).map(o => {
+  const p = o[0].split(' ');
+  return {
+    top: '<div class="big">' + o[1] + '</div><p>¿Cuál frase está bien escrita?</p>',
+    opts: sh([o[0], p[0] + ' ' + p[2] + ' ' + p[1]]),
+    a: o[0]
+  };
+});
+
+const TF = [
+  ['The elephant is BIG.','🐘',1],['The ice cream is HOT.','🍦',0],['The snow is COLD.','❄️',1],
+  ['The ant is TALL.','🐜',0],['The giraffe is TALL.','🦒',1],['The banana is YELLOW.','🍌',1],
+  ['The grass is BLUE.','🌱',0],['The clown is FUNNY.','🤡',1],['The pig in the mud is CLEAN.','🐷',0],
+  ['The sun is HOT.','☀️',1],['The crying boy is HAPPY.','😢',0],['The lion is BRAVE.','🦁',1],
+  ['The strawberry is GREEN.','🍓',0],['The flower is BEAUTIFUL.','🌺',1],['The fire is COLD.','🔥',0]
+];
+const gTF = () => sh(TF).slice(0, 10).map(t => ({
+  top: '<div class="big">' + t[1] + '</div><p class="sent">' + t[0] + '</p>',
+  opts: ['✅ True', '❌ False'],
+  a: t[2] ? '✅ True' : '❌ False'
+}));
+
+/* ---------- Memoria ---------- */
+function mem() {
+  const box = $('#game'), ws = sh(W).slice(0, 8);
+  const cs = sh(ws.flatMap(w => [{ k: w[0], t: w[2], e: 1 }, { k: w[0], t: w[0] }]));
+  let op = [], found = 0, mv = 0, lock = false;
+  box.innerHTML = '<h2>🎴 Memoria</h2><p class="tip">Busca las parejas: el dibujo y su adjetivo en inglés.</p>' +
+    '<div class="stat"><span>👣 Intentos: <b id="mv">0</b></span><span>✅ Parejas: <b id="fd">0</b>/8</span></div>' +
+    '<div class="grid4" id="gr"></div><div id="end"></div>';
+  const gr = $('#gr');
+  cs.forEach(c => {
+    const b = document.createElement('button');
+    b.className = 'mem'; b.textContent = '❓';
+    b.onclick = () => {
+      if (lock || b.classList.contains('on')) return;
+      b.classList.add('on'); if (c.e) b.classList.add('e');
+      b.textContent = c.t;
+      sfx.flip(); if (!c.e) speak(c.t);
+      op.push([c, b]);
+      if (op.length < 2) return;
+      mv++; $('#mv').textContent = mv;
+      const [[c1, b1], [c2, b2]] = op; op = [];
+      if (c1.k === c2.k) {
+        b1.classList.add('ok'); b2.classList.add('ok'); sfx.match();
+        found++; addStar(1); $('#fd').textContent = found;
+        if (found === 8) done('<div class="big">🌟</div><b>¡Lo lograste en ' + mv + ' intentos!</b>', mem);
+      } else {
+        lock = true;
+        setTimeout(() => {
+          sfx.flip(); [b1, b2].forEach(x => { x.classList.remove('on', 'e'); x.textContent = '❓'; });
+          lock = false;
+        }, 900);
+      }
+    };
+    gr.appendChild(b);
+  });
+}
+
+/* ---------- Sopa de letras ---------- */
+function wsr() {
+  const N = 10, box = $('#game');
+  const words = sh(['BIG','TALL','HAPPY','BRAVE','FUNNY','CLEAN','SMART','SCARED','SMALL','KIND','HOT','COLD']).slice(0, 6);
+  let g;
+  for (let ok = false; !ok;) {
+    g = Array.from({ length: N }, () => Array(N).fill(''));
+    ok = words.every(w => {
+      for (let t = 0; t < 300; t++) {
+        const d = [[0, 1], [1, 0], [1, 1]][Math.random() * 3 | 0];
+        const r = Math.random() * N | 0, c = Math.random() * N | 0;
+        if (r + d[0] * (w.length - 1) >= N || c + d[1] * (w.length - 1) >= N) continue;
+        let fit = true;
+        for (let k = 0; k < w.length; k++) { const x = g[r + d[0] * k][c + d[1] * k]; if (x && x !== w[k]) { fit = false; break; } }
+        if (!fit) continue;
+        for (let k = 0; k < w.length; k++) g[r + d[0] * k][c + d[1] * k] = w[k];
+        return true;
+      }
+      return false;
+    });
+  }
+  g = g.map(r => r.map(x => x || String.fromCharCode(65 + Math.random() * 26 | 0)));
+  box.innerHTML = '<h2>🔎 Sopa de letras</h2><p class="tip">Toca la primera letra y luego la última letra de la palabra (en línea recta).</p>' +
+    '<div class="chips">' + words.map(w => '<span class="chip" id="c-' + w + '">' + w + ' · ' + TR[w.toLowerCase()] + '</span>').join('') + '</div>' +
+    '<div class="ws" id="wsg"></div><div id="end"></div>';
+  const grid = $('#wsg'), cells = [], found = new Set();
+  let sel = null;
+  for (let r = 0; r < N; r++) {
+    cells.push([]);
+    for (let c = 0; c < N; c++) {
+      const b = document.createElement('button');
+      b.textContent = g[r][c];
+      b.onclick = () => {
+        if (!sel) { sel = [r, c]; b.classList.add('s'); sfx.click(); return; }
+        const [r0, c0] = sel; cells[r0][c0].classList.remove('s'); sel = null;
+        const dr = r - r0, dc = c - c0;
+        if (dr && dc && Math.abs(dr) !== Math.abs(dc)) return;
+        const n = Math.max(Math.abs(dr), Math.abs(dc)), sr = Math.sign(dr), sc = Math.sign(dc);
+        let s = '', cl = [];
+        for (let k = 0; k <= n; k++) { cl.push(cells[r0 + sr * k][c0 + sc * k]); s += g[r0 + sr * k][c0 + sc * k]; }
+        const rev = [...s].reverse().join('');
+        const hit = words.find(w => !found.has(w) && (w === s || w === rev));
+        if (!hit && n > 0) sfx.bad();
+        if (hit) {
+          found.add(hit); sfx.match(); speak(hit.toLowerCase());
+          cl.forEach(x => x.classList.add('f'));
+          document.getElementById('c-' + hit).classList.add('f');
+          addStar(2);
+          if (found.size === words.length) done('<div class="big">🔎</div><b>¡Encontraste todas las palabras!</b>', wsr);
+        }
+      };
+      cells[r].push(b); grid.appendChild(b);
+    }
+  }
+}
+
+/* ---------- Salva la paleta ---------- */
+function pops() {
+  const w = sh(W)[0], word = w[0].toUpperCase(), g = new Set(), box = $('#game');
+  let wr = 0;
+  box.innerHTML = '<h2>🍦 Salva la paleta</h2><p class="tip">Adivina el adjetivo letra por letra. ¡Cada error derrite la paleta!</p>' +
+    '<div class="stat"><span>Pista: ' + w[2] + ' ' + w[1] + '</span><span id="er"></span></div>' +
+    '<div class="pw"><div class="pop" id="pp"></div><div class="stick"></div><div class="pud" id="pd"></div></div>' +
+    '<div class="word" id="wd"></div><div class="kb" id="kb"></div><div id="end"></div>';
+  const all = () => [...word].every(x => g.has(x));
+  function draw() {
+    $('#wd').textContent = [...word].map(c => g.has(c) || wr >= 6 ? c : '_').join('');
+    $('#pp').style.height = (130 - wr * 20) + 'px';
+    $('#pd').style.width = (wr * 22) + 'px';
+    $('#er').textContent = '🫠 Errores: ' + wr + '/6';
+  }
+  function check() {
+    if (all()) { addStar(2); speak(word.toLowerCase()); done('<div class="big">🎉</div><b>¡Salvaste la paleta!</b><p>' + word + ' = ' + w[1] + '</p>', pops); }
+    else if (wr >= 6) done('<div class="big">🫠</div><b>¡Se derritió!</b><p>La palabra era <b>' + word + '</b> (' + w[1] + ')</p>', pops, 1);
+  }
+  'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').forEach(c => {
+    const b = document.createElement('button');
+    b.textContent = c;
+    b.onclick = () => {
+      if (wr >= 6 || all()) return;
+      g.add(c); b.disabled = true;
+      if (word.includes(c)) { b.classList.add('ok'); addStar(1); sfx.ok(); } else { b.classList.add('bad'); wr++; sfx.bad(); anim($('#pp'), 'hit'); }
+      draw(); check();
+    };
+    $('#kb').appendChild(b);
+  });
+  draw();
+}
+
+/* ---------- Menú ---------- */
+const G = [
+  { i: '🧠', n: 'Quiz', d: 'Elige el adjetivo correcto', fn: () => choice('🧠 Quiz de adjetivos', 'Mira el dibujo y elige cómo se dice en inglés.', gQuiz) },
+  { i: '🎴', n: 'Memoria', d: 'Encuentra las parejas', fn: mem },
+  { i: '🔎', n: 'Sopa de letras', d: 'Encuentra 6 adjetivos', fn: wsr },
+  { i: '✅', n: 'True or False', d: '¿Verdadero o falso?', fn: () => choice('✅ True or False', 'Lee la oración y decide si es verdadera o falsa.', gTF) },
+  { i: '🍦', n: 'Salva la paleta', d: 'Adivina antes de que se derrita', fn: pops },
+  { i: '↔️', n: 'Opuestos', d: 'Encuentra el adjetivo contrario', fn: () => choice('↔️ Opuestos', 'Elige el adjetivo que significa lo contrario.', gOpp) },
+  { i: '✏️', n: 'Completa la frase', d: 'Elige la palabra que falta', fn: () => choice('✏️ Completa la frase', 'Lee la oración y elige el adjetivo que falta.', gSent) },
+  { i: '🔀', n: 'Ordena la frase', d: 'El adjetivo va antes', fn: () => choice('🔀 Ordena la frase', 'Recuerda: en inglés el adjetivo va ANTES del sustantivo.', gOrder) }
+];
+
+function menu() {
+  T++;
+  $('#game').hidden = true; $('#home').hidden = false; $('#back').hidden = true;
+}
+function go(i) {
+  T++;
+  $('#home').hidden = true; $('#game').hidden = false; $('#back').hidden = false;
+  G[i].fn();
+  window.scrollTo(0, 0);
+}
+(function init() {
+  const h = $('#home');
+  h.innerHTML = '<h2>¡Elige un juego!</h2><p class="tip">Cada acierto te da ⭐ estrellas. ¡Junta todas las que puedas!</p><div class="menu" id="mn"></div>';
+  G.forEach((g, i) => {
+    const b = document.createElement('button');
+    b.className = 'tile';
+    b.innerHTML = '<i>' + g.i + '</i><b>' + g.n + '</b><small>' + g.d + '</small>';
+    b.style.animationDelay = (i * .06) + 's';
+    b.onclick = () => go(i);
+    $('#mn').appendChild(b);
+  });
+  $('#back').onclick = menu;
+  $('#mute').onclick = () => {
+    muted = !muted;
+    $('#mute').textContent = muted ? '🔇' : '🔊';
+    if (muted && window.speechSynthesis) speechSynthesis.cancel(); else sfx.click();
+  };
+  document.addEventListener('click', e => { if (e.target.closest('.tile,.back,.btn')) sfx.click(); });
+})();
+</script>
+</body>
+</html>
